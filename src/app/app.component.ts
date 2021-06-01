@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
 
   books: Book[] = [];
   totalCount: number = 0;
-  isLoading: boolean = false;
   search$: Subject<string> = new Subject<string>();
 
   constructor(
@@ -46,7 +45,6 @@ export class AppComponent implements OnInit {
 
     this.booksStore.books$.subscribe(books => this.books = books);
     this.booksStore.totalCount$.subscribe(count => this.totalCount = count);
-    this.booksStore.isLoading$.subscribe(loading => this.isLoading = loading);
   }
 
   search(term: string) {
