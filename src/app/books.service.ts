@@ -18,7 +18,7 @@ export class BooksService {
         map((res: any) => ({
           totalItems: res.totalItems,
           books: res.items.map((item: any) => item.volumeInfo).map(
-            (book: any) => ({ title: book.title, previewImgUrl: book.imageLinks.thumbnail })
+            (book: any) => ({ title: book.title, previewImgUrl: book.imageLinks?.thumbnail })
           )
         })),
       );

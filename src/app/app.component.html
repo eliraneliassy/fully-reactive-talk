@@ -1,5 +1,6 @@
 <app-header></app-header>
 
+
 <div class="search">
   <mat-form-field>
     <mat-label>Search Term</mat-label>
@@ -11,10 +12,10 @@
   </mat-form-field>
 </div>
 
-<!-- <ng-container *ngIf="viewObs$ | async as viewObs"> -->
+
   <app-data-table
     [data]="books"
     [totalCount]="totalCount"
     (pageChange)="pageChange($event)"
   ></app-data-table>
-<!-- </ng-container> -->
+

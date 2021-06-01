@@ -7,6 +7,7 @@ export interface BooksState {
   books: Book[];
   totalCount: number;
   filters: BooksSearchFilters;
+  loading: boolean;
 }
 
 @Injectable()
@@ -20,11 +21,13 @@ export class BooksStore extends ComponentStore<BooksState> {
         term: '',
         page: 0,
         itemsPerPage: 5
-      }
+      },
+      loading: false
     });
   }
 
   readonly books$: Observable<Book[]> = this.select(state => state.books);
   readonly filters$: Observable<BooksSearchFilters> = this.select(state => state.filters);
   readonly totalCount$: Observable<number> = this.select(state => state.totalCount);
+  readonly isLoading$: Observable<boolean> = this.select(state => state.loading);
 }
