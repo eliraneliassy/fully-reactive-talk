@@ -1,4 +1,5 @@
-import { AuthInterceptor, TOKENIZE_REQUEST } from './auth.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
+
 import { Observable, of } from 'rxjs';
 import { BooksService } from './books.service';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
@@ -20,10 +21,8 @@ import { BookResponse } from './book';
 import { delay } from 'rxjs/operators';
 
 export function app_init(httpClient: HttpClient): () => Observable<any> {
-  return () => httpClient.get('https://jsonplaceholder.typicode.com/posts', {
-    context: new HttpContext().set(TOKENIZE_REQUEST, false)
-  }).pipe(
-    
+  return () => httpClient.get('https://jsonplaceholder.typicode.com/todos/1').pipe(
+    delay(5000)
   )
 }
 
@@ -48,15 +47,15 @@ export function app_init(httpClient: HttpClient): () => Observable<any> {
   ],
   providers: [
     {
-      provide: APP_INITIALIZER,
-      useFactory: app_init,
-      multi: true,
-      deps: [HttpClient]
-    },
-    {
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: AuthInterceptor
+    },
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      useFactory: app_init,
+      deps: [HttpClient]
     }
   ],
   bootstrap: [AppComponent]

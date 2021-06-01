@@ -18,9 +18,11 @@ export class AppComponent implements OnInit {
   books$ = this.booksStore.books$;
   totalCount$ = this.booksStore.totalCount$;
   search$: Subject<string> = new Subject<string>();
+  
   viewObs$ = combineLatest([this.books$, this.totalCount$]).pipe(
-    map(([books, total]) => ({books, total}))
-  );
+    map(([books, count]) => ({ books, count }))
+  )
+
 
   constructor(
     private readonly booksStore: BooksStore,
@@ -41,7 +43,13 @@ export class AppComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((term) => this.booksStore.setState(state => ({
       ...state, filters: { ...state.filters, term }
-    })))
+    })));
+
+    // this.booksStore.books$.subscribe(books => this.books = books);
+    // this.booksStore.totalCount$.subscribe(count => this.totalCount = count);
+
+
+
   }
 
   search(term: string) {

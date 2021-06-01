@@ -4,8 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpContextToken,
-  HttpHeaders
+  HttpContextToken
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -22,7 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
     if (isTokenize) {
       request = request.clone({ headers: request.headers.set('Authorization', '123') });
     }
-
     return next.handle(request);
   }
 }

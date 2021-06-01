@@ -14,7 +14,7 @@
 <ng-container *ngIf="viewObs$ | async as viewObs">
   <app-data-table
     [data]="viewObs.books"
-    [totalCount]="viewObs.total"
+    [totalCount]="viewObs.count"
     (pageChange)="pageChange($event)"
   ></app-data-table>
 </ng-container>
