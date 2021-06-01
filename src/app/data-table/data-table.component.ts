@@ -8,13 +8,18 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataTableComponent implements OnInit {
   private _data: Book[] = [];
-  @Input() set data(d: Book[]) {
-    this._data = d;
-    this.dataSource = new MatTableDataSource<Book>(this._data);
+  @Input() set data(val: Book[]) {
+    this._data = val;
+
+    const data = val.map(book => {
+      const rand = Math.floor(Math.random() * 11) + 20; // ramdom 20-30
+      return { ...book, fibo: this.fibo(rand) }
+    });
+    this.dataSource = new MatTableDataSource<Book>(data);
   }
   get data() {
     return this._data;
@@ -25,7 +30,7 @@ export class DataTableComponent implements OnInit {
   @Output() pageChange = new EventEmitter<PageEvent>();
   dataSource: MatTableDataSource<Book> = new MatTableDataSource<Book>([]);
 
-  displayedColumns: string[] = ['position', 'previewImgUrl', 'title'];
+  displayedColumns: string[] = ['position', 'previewImgUrl', 'title', 'fibo'];
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 

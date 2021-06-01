@@ -11,10 +11,10 @@
   </mat-form-field>
 </div>
 
-<ng-container *ngIf="viewObs$ | async as viewObs">
+<!-- <ng-container *ngIf="viewObs$ | async as viewObs"> -->
   <app-data-table
-    [data]="viewObs.books"
-    [totalCount]="viewObs.total"
+    [data]="books"
+    [totalCount]="totalCount"
     (pageChange)="pageChange($event)"
   ></app-data-table>
-</ng-container>
+<!-- </ng-container> -->

@@ -12,15 +12,18 @@ import { BooksStore } from './books-store.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [BooksStore],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
-  books$ = this.booksStore.books$;
-  totalCount$ = this.booksStore.totalCount$;
+  // books$ = this.booksStore.books$;
+  // totalCount$ = this.booksStore.totalCount$;
+
+  books: Book[] = [];
+  totalCount: number = 0;
   search$: Subject<string> = new Subject<string>();
-  viewObs$ = combineLatest([this.books$, this.totalCount$]).pipe(
-    map(([books, total]) => ({books, total}))
-  );
+  // viewObs$ = combineLatest([this.books$, this.totalCount$]).pipe(
+  //   map(([books, total]) => ({books, total}))
+  // );
 
   constructor(
     private readonly booksStore: BooksStore,
@@ -41,7 +44,10 @@ export class AppComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe((term) => this.booksStore.setState(state => ({
       ...state, filters: { ...state.filters, term }
-    })))
+    })));
+
+    this.booksStore.books$.subscribe(books => this.books=books);
+    this.booksStore.totalCount$.subscribe(count => this.totalCount = count);
   }
 
   search(term: string) {
@@ -49,7 +55,6 @@ export class AppComponent implements OnInit {
   }
 
   pageChange(event: PageEvent) {
-    console.log(event);
     this.booksStore.setState(state => ({
       ...state, filters: {
         ...state.filters,
